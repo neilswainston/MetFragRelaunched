@@ -30,7 +30,7 @@ public class PrecursorCandidate implements ICandidate {
 	public PrecursorCandidate(String inchi, String identifier, String smiles) {
 		this.properties = new Hashtable<String, Object>();
 		this.properties.put(VariableNames.IDENTIFIER_NAME, identifier);
-		this.properties.put(VariableNames.INCHI_NAME, inchi);
+		// this.properties.put(VariableNames.INCHI_NAME, inchi);
 		this.properties.put(VariableNames.SMILES_NAME, smiles);
 	}
 	

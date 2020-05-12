@@ -88,32 +88,35 @@ public class LocalCSVDatabase extends AbstractFileDatabase {
 		}
 		
 		String properIdentifierName = "";
-		String properInChIName = "";
+		// String properInChIName = "";
 		for(String name : possibleIdentifierNames) {
 			if(nameToWasFound.get(name)) {
 				properIdentifierName = name;
 				break;
 			}
 		}
-
+		/*
 		for(String name : possibleInChINames) {
 			if(nameToWasFound.get(name)) {
 				properInChIName = name;
 				break;
 			}
-		}	
+		}
+		*/
 		if(properIdentifierName.equals("")) {
 			logger.error("Error: No Identifier column defined.");
 			parser.close();
 			reader.close();
 			throw new Exception();
 		}
+		/*
 		if(possibleInChINames.equals("")) {
 			logger.error("Error: No InChI column defined.");
 			parser.close();
 			reader.close();
 			throw new Exception();
 		}
+		*/
 		int index = 0;
 		for(CSVRecord record : parser) {
 			index++;
@@ -121,7 +124,7 @@ public class LocalCSVDatabase extends AbstractFileDatabase {
 			if(identifier == null) continue;
 			identifier = identifier.trim();
 			if(identifier.equals("-") || identifier.equals("NO_MATCH")) continue;
-			ICandidate precursorCandidate = new TopDownPrecursorCandidate(record.get(properInChIName), identifier + "|" + index, record.get(VariableNames.SMILES_NAME));
+			ICandidate precursorCandidate = new TopDownPrecursorCandidate(null, identifier + "|" + index, record.get(VariableNames.SMILES_NAME));
 			keys = nameToWasFound.keySet().iterator();
 			for(String curKey : this.preparedPropertyNames) {
 				if(nameToWasFound.get(curKey)) {
@@ -145,10 +148,13 @@ public class LocalCSVDatabase extends AbstractFileDatabase {
 			} else {
 				precursorCandidate.setProperty(VariableNames.MONOISOTOPIC_MASS_NAME, Double.parseDouble((String)precursorCandidate.getProperty(VariableNames.MONOISOTOPIC_MASS_NAME)));
 			}
+
+			/*
 			if(!this.addInChIFromSmiles(precursorCandidate)) continue;
 			if(!this.addSMILESFromInChI(precursorCandidate)) continue;
 			if(!this.addInChIKeyFromSmiles(precursorCandidate)) continue;
 			if(!this.setInChIValues(precursorCandidate)) continue;
+			*/
 			
 			if(this.checkFilter(precursorCandidate)) {
 				this.identifiers.add(precursorCandidate.getIdentifier());
