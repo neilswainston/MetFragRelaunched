@@ -1,7 +1,12 @@
 package de.ipbhalle.metfraglib.peaklistreader;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
 
 import de.ipbhalle.metfraglib.list.DefaultPeakList;
 import de.ipbhalle.metfraglib.list.SortedTandemMassPeakList;
@@ -24,9 +29,20 @@ public class FilteredTandemMassPeakListReader extends AbstractPeakListReader {
 	public DefaultPeakList read() {
 		int numberMaximumPeaksUsed = (Integer)settings.get(VariableNames.NUMBER_MAXIMUM_PEAKS_USED_NAME);
 		SortedTandemMassPeakList peakList = null;
-		String filename = (String)this.settings.get(VariableNames.PEAK_LIST_PATH_NAME);
+		String data = (String)this.settings.get(VariableNames.PEAK_LIST_PATH_NAME);
+		
+		Reader dbReader = null;
+		
 		try {
-			java.io.BufferedReader breader = new java.io.BufferedReader(new java.io.FileReader(new java.io.File(filename)));
+			final File file = new File(data);
+			dbReader = new FileReader(file);
+		}
+		catch(IOException e) {
+			dbReader = new StringReader(data);
+		}
+		
+		try {
+			java.io.BufferedReader breader = new java.io.BufferedReader(dbReader);
 			peakList = new SortedTandemMassPeakList((Double)this.settings.get(VariableNames.PRECURSOR_NEUTRAL_MASS_NAME));
 			String line = "";
 			while((line = breader.readLine()) != null) {
