@@ -139,6 +139,7 @@ public class LocalCSVDatabase extends AbstractFileDatabase {
 				}
 			}
 			
+			/*			
 			if(!precursorCandidate.hasDefinedProperty(VariableNames.MONOISOTOPIC_MASS_NAME)) {
 				try {
 					precursorCandidate.setProperty(VariableNames.MONOISOTOPIC_MASS_NAME, precursorCandidate.getMolecularFormula().getMonoisotopicMass());
@@ -149,7 +150,6 @@ public class LocalCSVDatabase extends AbstractFileDatabase {
 				precursorCandidate.setProperty(VariableNames.MONOISOTOPIC_MASS_NAME, Double.parseDouble((String)precursorCandidate.getProperty(VariableNames.MONOISOTOPIC_MASS_NAME)));
 			}
 
-			/*
 			if(!this.addInChIFromSmiles(precursorCandidate)) continue;
 			if(!this.addSMILESFromInChI(precursorCandidate)) continue;
 			if(!this.addInChIKeyFromSmiles(precursorCandidate)) continue;
